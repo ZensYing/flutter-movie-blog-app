@@ -8,6 +8,7 @@ class MovieScreen extends StatefulWidget {
   const MovieScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MovieScreenState createState() => _MovieScreenState();
 }
 

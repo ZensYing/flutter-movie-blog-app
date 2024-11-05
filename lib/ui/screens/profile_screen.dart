@@ -14,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
@@ -37,9 +38,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('is_logged_in');
 
+    // ignore: use_build_context_synchronously
     Provider.of<UserProvider>(context, listen: false).clearUser();
 
     Navigator.pushReplacement(
+      // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(builder: (context) => const OnboardingScreen()),
     );
@@ -84,7 +87,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPressed: () => _logout(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                       side: const BorderSide(color: Colors.tealAccent),
@@ -110,12 +114,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PolicyScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const PolicyScreen()),
                     );
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.info_outline, color: Colors.tealAccent),
+                  leading:
+                      const Icon(Icons.info_outline, color: Colors.tealAccent),
                   title: const Text(
                     "About App",
                     style: TextStyle(color: Colors.white),
@@ -123,12 +129,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AboutAppScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const AboutAppScreen()),
                     );
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.support_agent, color: Colors.tealAccent),
+                  leading:
+                      const Icon(Icons.support_agent, color: Colors.tealAccent),
                   title: const Text(
                     "Support",
                     style: TextStyle(color: Colors.white),
@@ -136,12 +144,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SupportScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const SupportScreen()),
                     );
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.new_releases, color: Colors.tealAccent),
+                  leading:
+                      const Icon(Icons.new_releases, color: Colors.tealAccent),
                   title: const Text(
                     "News Feature (Upcoming)",
                     style: TextStyle(color: Colors.white),
@@ -149,12 +159,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => NewsFeatureScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => NewsFeatureScreen()),
                     );
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.verified_user, color: Colors.tealAccent),
+                  leading:
+                      const Icon(Icons.verified_user, color: Colors.tealAccent),
                   title: Text(
                     "App Version $_appVersion",
                     style: const TextStyle(color: Colors.white),

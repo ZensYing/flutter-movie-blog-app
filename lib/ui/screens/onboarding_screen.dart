@@ -7,6 +7,7 @@ class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
@@ -26,8 +27,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     // Navigate to the LoginScreen
     Navigator.pushReplacement(
+      // ignore: use_build_context_synchronously
       context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 

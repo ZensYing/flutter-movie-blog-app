@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -40,8 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (loginSuccess != null) {
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
-        MaterialPageRoute(builder: (context) => MainScreen()),
+        MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     } else {
       _showErrorDialog("Login Failed", "Please check your credentials and try again.");
@@ -201,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                          onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RegisterScreen()), // Navigate to RegisterScreen
+                            MaterialPageRoute(builder: (context) => const RegisterScreen()), // Navigate to RegisterScreen
                           );
                         },
                         child:const Text(

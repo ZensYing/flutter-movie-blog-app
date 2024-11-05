@@ -11,6 +11,7 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MainScreenState createState() => _MainScreenState();
 }
 
@@ -36,10 +37,10 @@ class _MainScreenState extends State<MainScreen> {
 
       // Initialize _screens after fetching user data
       _screens = [
-        HomeScreen(),
-        MovieScreen(),
-        BlogScreen(),
-        ProfileScreen(), // Use correct parameter names here
+        const HomeScreen(),
+        const MovieScreen(),
+        const BlogScreen(),
+        const ProfileScreen(), // Use correct parameter names here
       ];
     });
   }
@@ -59,7 +60,8 @@ class _MainScreenState extends State<MainScreen> {
       body: _screens[_currentIndex], // Display the selected screen
       bottomNavigationBar: WaterDropNavBar(
         backgroundColor: Colors.black, // Background color of the nav bar
-        waterDropColor: Colors.tealAccent, // The color of the water drop animation
+        waterDropColor:
+            Colors.tealAccent, // The color of the water drop animation
         iconSize: 24, // Icon size in the nav bar
         barItems: <BarItem>[
           BarItem(

@@ -8,6 +8,7 @@ class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BlogScreenState createState() => _BlogScreenState();
 }
 

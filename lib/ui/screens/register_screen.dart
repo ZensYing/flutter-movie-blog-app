@@ -7,6 +7,7 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
@@ -34,8 +35,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     if (success) {
       Navigator.pushReplacement(
+        // ignore: use_build_context_synchronously
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     } else {
       _showErrorDialog("Registration Failed", "Please try again.");
@@ -143,7 +145,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: _register,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.tealAccent,
-                      padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 80, vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),

@@ -5,14 +5,17 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:movie_app/providers/user_provider.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
 import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DirectusService {
-  final String baseUrl = "http://194.233.94.140:8057";
+  final String baseUrl = "https://sounsoratha.online/cms";
 
-  Future<String?> login(String email, String password, UserProvider userProvider) async {
+  Future<String?> login(
+      String email, String password, UserProvider userProvider) async {
     final url = Uri.parse("$baseUrl/auth/login");
 
     final response = await http.post(
@@ -24,11 +27,11 @@ class DirectusService {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final token = data['data']['access_token'];
-      
+
       // Save token in SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('auth_token', token);
-      
+
       return token; // Return JWT token
     } else {
       if (kDebugMode) {
@@ -109,7 +112,8 @@ class DirectusService {
       return true;
     } else {
       if (kDebugMode) {
-        print("Failed to update profile with status code: ${response.statusCode}");
+        print(
+            "Failed to update profile with status code: ${response.statusCode}");
       }
       if (kDebugMode) {
         print("Response body: ${response.body}");
