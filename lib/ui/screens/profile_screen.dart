@@ -1,5 +1,5 @@
-// lib/ui/screens/profile_screen.dart
 import 'package:flutter/material.dart';
+import 'package:movie_app/ui/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:movie_app/providers/user_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,13 +8,12 @@ import 'onboarding_screen.dart';
 import 'about_app_screen.dart';
 import 'policy_screen.dart';
 import 'support_screen.dart';
-import 'news_feature_screen.dart'; // Import NewsFeatureScreen
+import 'news_feature_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
@@ -27,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _fetchAppVersion();
   }
 
+  // Fetch the app version from package info
   Future<void> _fetchAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
@@ -34,35 +34,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  // Handle logout action
   Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('is_logged_in');
 
-    // ignore: use_build_context_synchronously
+    // Clear user data from UserProvider
     Provider.of<UserProvider>(context, listen: false).clearUser();
 
+    // Navigate to the onboarding screen
     Navigator.pushReplacement(
-      // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+    );
+  }
+
+  // Navigate to the login screen if user is not logged in
+  Future<void> _goToLogin(BuildContext context) async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final bool? isLoggedIn =
+        userProvider.isLoggedIn; // Get login status from UserProvider
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Stack(
           children: [
+            // Background image
             Positioned.fill(
               child: Image.asset(
                 'assets/img/home_bg.png',
                 fit: BoxFit.cover,
               ),
             ),
+            // Gradient overlay
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -75,6 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+            // Main content
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -84,7 +98,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => _logout(context),
+                  onPressed: () => (isLoggedIn ?? false)
+                      ? _logout(context)
+                      : _goToLogin(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     padding: const EdgeInsets.symmetric(
@@ -94,9 +110,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       side: const BorderSide(color: Colors.tealAccent),
                     ),
                   ),
-                  child: const Text(
-                    "Logout",
-                    style: TextStyle(
+                  child: Text(
+                    (isLoggedIn ?? false) ? "Logout" : "Go Login",
+                    style: const TextStyle(
                       color: Colors.tealAccent,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

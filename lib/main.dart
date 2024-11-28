@@ -1,41 +1,27 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:movie_app/providers/blog_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:movie_app/providers/movie_provider.dart';
-import 'package:movie_app/providers/user_provider.dart'; // Import the UserProvider
+import 'package:movie_app/providers/user_provider.dart';
 import 'package:movie_app/ui/screens/main_screen.dart';
 import 'package:movie_app/ui/screens/onboarding_screen.dart';
-import 'package:movie_app/ui/screens/login_screen.dart';
 
 void main() {
   runApp(
     MultiProvider(
-   providers: [
+      providers: [
         ChangeNotifierProvider(create: (_) => MovieProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => BlogProvider()), // Add BlogProvider here
+        ChangeNotifierProvider(create: (_) => BlogProvider()),
       ],
-      child:const MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // Check if onboarding is complete
-  Future<bool> _checkOnboardingStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('onboarding_complete') ?? false;
-  }
-
-  // Check if the user is already logged in
-  Future<bool> _checkLoginStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('is_logged_in') ?? false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,31 +31,50 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FutureBuilder<bool>(
-        future: _checkOnboardingStatus(),
-        builder: (context, onboardingSnapshot) {
-          // Show loading spinner while waiting
-          if (onboardingSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      home: const SplashScreen(),
+    );
+  }
+}
 
-          bool onboardingComplete = onboardingSnapshot.data ?? false;
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
-          // Show login screen or main screen based on login status
-          return onboardingComplete
-              ? FutureBuilder<bool>(
-                  future: _checkLoginStatus(),
-                  builder: (context, loginSnapshot) {
-                    if (loginSnapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
 
-                    bool isLoggedIn = loginSnapshot.data ?? false;
-                    return isLoggedIn ? const MainScreen() : const LoginScreen();
-                  },
-                )
-              : const OnboardingScreen();
-        },
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool onboardingComplete =
+        prefs.getBool('onboarding_complete') ?? false;
+
+    // Navigate based on onboarding status
+    if (onboardingComplete) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: CircularProgressIndicator(color: Colors.tealAccent),
       ),
     );
   }

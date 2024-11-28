@@ -46,7 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     } else {
-      _showErrorDialog("Login Failed", "Please check your credentials and try again.");
+      _showErrorDialog(
+          "Login Failed", "Please check your credentials and try again.");
     }
   }
 
@@ -111,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 40),
-                 const Text(
+                  const Text(
                     "Welcome Back!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -133,18 +134,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.email, color: Colors.tealAccent),
+                      prefixIcon:
+                          const Icon(Icons.email, color: Colors.tealAccent),
                       labelText: "Email",
                       labelStyle: const TextStyle(color: Colors.tealAccent),
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.1),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide:const BorderSide(color: Colors.tealAccent),
+                        borderSide: const BorderSide(color: Colors.tealAccent),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide:const BorderSide(color: Colors.tealAccent),
+                        borderSide: const BorderSide(color: Colors.tealAccent),
                       ),
                     ),
                     style: const TextStyle(color: Colors.white),
@@ -154,7 +156,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.lock, color: Colors.tealAccent),
+                      prefixIcon:
+                          const Icon(Icons.lock, color: Colors.tealAccent),
                       labelText: "Password",
                       labelStyle: const TextStyle(color: Colors.tealAccent),
                       filled: true,
@@ -168,11 +171,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderSide: const BorderSide(color: Colors.tealAccent),
                       ),
                     ),
-                    style:const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 30),
                   _isLoading
-                      ?const Center(child: CircularProgressIndicator(color: Colors.tealAccent))
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                              color: Colors.tealAccent))
                       : ElevatedButton(
                           onPressed: _login,
                           style: ElevatedButton.styleFrom(
@@ -182,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child:const Text(
+                          child: const Text(
                             "Login",
                             style: TextStyle(
                               color: Colors.black,
@@ -200,13 +205,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(color: Colors.white.withOpacity(0.7)),
                       ),
                       TextButton(
-                         onPressed: () {
+                        onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const RegisterScreen()), // Navigate to RegisterScreen
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const RegisterScreen()), // Navigate to RegisterScreen
                           );
                         },
-                        child:const Text(
+                        child: const Text(
                           "Register",
                           style: TextStyle(color: Colors.tealAccent),
                         ),

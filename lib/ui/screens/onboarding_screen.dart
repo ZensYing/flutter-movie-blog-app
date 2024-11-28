@@ -1,7 +1,8 @@
 // lib/ui/screens/onboarding_screen.dart
 import 'package:flutter/material.dart';
+import 'package:movie_app/ui/screens/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'login_screen.dart';
+import 'home_screen.dart'; // Import the HomeScreen
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -20,16 +21,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     "Download and watch offline wherever you are",
     "Get personalized recommendations just for you"
   ];
-
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_complete', true);
 
-    // Navigate to the LoginScreen
+    // Navigate to MainScreen
     Navigator.pushReplacement(
-      // ignore: use_build_context_synchronously
       context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
+      MaterialPageRoute(builder: (context) => const MainScreen()),
     );
   }
 
@@ -65,16 +64,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           children: [
                             // Circular Avatar with Outer Ring
                             Container(
-                              padding: const EdgeInsets.all(8.0), // Outer ring padding
+                              padding: const EdgeInsets.all(
+                                  8.0), // Outer ring padding
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 gradient: LinearGradient(
-                                  colors: [Colors.pinkAccent, Colors.tealAccent],
+                                  colors: [
+                                    Colors.pinkAccent,
+                                    Colors.tealAccent
+                                  ],
                                 ),
                               ),
                               child: const CircleAvatar(
                                 radius: 100, // Adjust the size as needed
-                                backgroundImage: AssetImage('assets/img/Avatar.png'),
+                                backgroundImage:
+                                    AssetImage('assets/img/Avatar.png'),
                               ),
                             ),
                             const SizedBox(height: 30),
@@ -104,7 +108,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       // Dots Indicator and Next/Back Buttons
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(onboardingTexts.length, (dotIndex) {
+                        children:
+                            List.generate(onboardingTexts.length, (dotIndex) {
                           return Container(
                             margin: const EdgeInsets.symmetric(horizontal: 4.0),
                             width: 8,
@@ -136,14 +141,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             )
                           else
-                            const SizedBox(width: 60), // Placeholder for alignment
-                          
+                            const SizedBox(
+                                width: 60), // Placeholder for alignment
+
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.tealAccent,
                               backgroundColor: Colors.transparent,
                               side: const BorderSide(color: Colors.tealAccent),
-                              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 32, vertical: 12),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -158,7 +165,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 _completeOnboarding();
                               }
                             },
-                            child: Text(_currentPage == onboardingTexts.length - 1 ? "Get Started" : "Next"),
+                            child: Text(
+                                _currentPage == onboardingTexts.length - 1
+                                    ? "Get Started"
+                                    : "Next"),
                           ),
                         ],
                       ),
